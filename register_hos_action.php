@@ -17,7 +17,7 @@ if (isset($_POST['register'])) {
     $receiverUsername = $_POST['hospitalusername'];
     $receiverPassword = $_POST['hospitalpassword'];
 
-    $sql = "INSERT INTO hospitals (name, username, password) VALUES ('$receiverName', '$receiverUsername', '$receiverPassword')";
+    $sql = "INSERT INTO hospital (name, username, password) VALUES ('$receiverName', '$receiverUsername', '$receiverPassword')";
 
 
     if ($conn->query($sql)) {

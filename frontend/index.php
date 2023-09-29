@@ -16,9 +16,17 @@
     .btn-container {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
     }
     .btn-container .btn {
       margin: 10px;
+    }
+    .btn-available-blood {
+      background-color: #28a745;
+      color: white;
+    }
+    .btn-available-blood:hover {
+      background-color: #218838;
     }
   </style>
 </head>
@@ -33,6 +41,9 @@
     <div class="btn-container">
       <a href="register_hospital.php" class="btn btn-success btn-lg">Register as Hospital</a>
       <a href="register_receiver.php" class="btn btn-success btn-lg">Register as Receiver</a>
+    </div>
+    <div class="btn-container">
+      <a href="availableBloodSample.php" class="btn btn-lg btn-available-blood">Available Blood Samples</a>
     </div>
   </div>
 

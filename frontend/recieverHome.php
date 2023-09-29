@@ -8,7 +8,7 @@
 </head>
 <body>
   <form action="../logoutAsRecAction.php" method="POST">
-  <button type="submit" class="btn btn-primary">Logout</button>
+  <button type="submit" class="btn btn-danger">Logout</button>
   </form>
     <h1>Welcome</h1>
 

@@ -15,7 +15,7 @@
   <div class="container mt-5">
     <h2>Login As Receiver</h2>
     <!-- Form for login -->
-    <form action="../loginAsRecAction.php" method="POST">
+    <form id="receiverLoginForm" action="../loginAsRecAction.php" method="POST">
       <div class="form-group">
         <label for="loginUsername">Username</label>
         <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Enter username">

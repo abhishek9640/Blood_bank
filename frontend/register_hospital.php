@@ -10,7 +10,7 @@
 
 <body>
 <div>
-    <a href="index.php"><button type="submit" class="btn btn-primary">Back</button></a>
+    <a href="index.php"><button class="btn btn-primary">Back</button></a>
     </div>
   <div class="container mt-5">
     <h2>Register as Hospital</h2>

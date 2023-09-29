@@ -15,7 +15,7 @@
   <div class="container mt-5">
     <h2>Login As Hospital</h2>
     <!-- Form for login -->
-    <form action="../loginAsHosAction.php" method="POST">
+    <form id="hospitalLoginForm" action="../loginAsHosAction.php" method="POST">
       <div class="form-group">
         <label for="loginEmail">Username</label>
         <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Enter username">

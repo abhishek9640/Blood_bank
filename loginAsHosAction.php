@@ -1,8 +1,8 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve the submitted username and password
-    $username = $_POST['username'];  // Update to the correct form field name
-    $password = $_POST['password'];  // Update to the correct form field name
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
     // Database connection details
     $servername = "localhost";
@@ -19,14 +19,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // SQL query to check if the username and password match
-    $sql = "SELECT * FROM hospitals WHERE username='$username' AND password='$password'";  // Updated column names
+    $sql = "SELECT HospitalID FROM hospital WHERE username='$username' AND password='$password'";  // Assuming HospitalID is the column to retrieve
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
         // Successful login
-        echo "Login successful. Redirecting to dashboard...";
-        // You can redirect to the hospital's dashboard or any other page
-        header("Location: frontend/hospitalHome.php");
+        $row = $result->fetch_assoc();
+        $hospitalID = $row['HospitalID'];
+        
+        // Set HospitalID in the session
+        session_start();
+        $_SESSION['HospitalID'] = $hospitalID;
+
+        // Redirect to the hospital's dashboard or any other page
+        header("Location: frontend/hospitalDashboard.php");
         exit();
     } else {
         // Invalid credentials
