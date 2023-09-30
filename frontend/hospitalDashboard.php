@@ -8,6 +8,7 @@
     <style>
         body {
             padding: 20px;
+            font-family: Arial, sans-serif;
         }
         .navbar {
             background-color: #f8f9fa;
@@ -17,8 +18,15 @@
             font-size: 24px;
         }
         .content {
-            margin-top: 20px;
+            margin-top: 50px;
             text-align: center;
+        }
+        .content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            margin: 10px;
         }
     </style>
 </head>
@@ -38,7 +46,8 @@
 
     <div class="content">
         <h1>Welcome to the Hospital's Blood Bank System</h1>
-        <a href="addBloodSample.php" class="btn btn-primary mt-3">Add Blood Sample</a>
+        <a href="addBloodSample.php" class="btn btn-primary">Add Blood Sample</a>
+        <a href="viewRequestHos.php" class="btn btn-primary">View Request</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

@@ -1,19 +1,15 @@
 <?php
 session_start();
 
-// Check if the user is logged in as a hospital
-if (!isset($_SESSION['HospitalID'])) {
-    header("Location: frontend/hospitalDashboard.php");
+// Check if the user is logged in as a receiver
+if (!isset($_SESSION['ReceiverID'])) {
+    header("Location: frontend/receiverHome.php");
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve the submitted blood group and quantity
-    $bloodGroup = $_POST['bloodGroup'];
-    $quantity = $_POST['quantity'];
-
-    // Retrieve the hospital ID from the session
-    $HospitalID = $_SESSION['HospitalID'];
+    // Retrieve the selected blood sample ID
+    $sampleID = $_POST['sampleID'];
 
     // Database connection details
     $servername = "localhost";
@@ -29,33 +25,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Check if the blood group already exists
-    $checkQuery = "SELECT * FROM bloodsample WHERE HospitalID = '$HospitalID' AND bloodGroup = '$bloodGroup'";
-    $checkResult = $conn->query($checkQuery);
+    // Retrieve the receiver ID from the session
+    $receiverID = $_SESSION['ReceiverID'];
 
-    if ($checkResult->num_rows > 0) {
-        // Blood group already exists, update the quantity
-        $row = $checkResult->fetch_assoc();
-        $newQuantity = $row['Quantity'] + $quantity;
+    // Retrieve the SampleID from the BloodSample table based on the selected blood sample
+    $retrieveSampleIDQuery = "SELECT SampleID FROM BloodSample WHERE SampleID = '$sampleID'";
+    $result = $conn->query($retrieveSampleIDQuery);
 
-        // Update the quantity
-        $updateQuery = "UPDATE bloodsample SET Quantity = '$newQuantity' WHERE HospitalID = '$HospitalID' AND bloodGroup = '$bloodGroup'";
-        if ($conn->query($updateQuery) === TRUE) {
-            echo "<script>alert('Quantity updated for blood group: $bloodGroup.'); window.history.back();</script>";
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $sampleID = $row['SampleID'];
+
+        // SQL query to insert the request into the Requests table
+        $sql = "INSERT INTO Requests (ReceiverID, SampleID, RequestDate, Status)
+                VALUES ('$receiverID', '$sampleID', NOW(), 'Pending')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "<script>alert('Blood sample request sent successfully.'); window.history.back();</script>";
         } else {
-            echo "Error updating quantity: " . $conn->error;
+            echo "Error: " . $sql . "<br>" . $conn->error;
         }
     } else {
-        // Blood group doesn't exist, insert a new record
-        $insertQuery = "INSERT INTO bloodsample (HospitalID, bloodGroup, Quantity) VALUES ('$HospitalID', '$bloodGroup', '$quantity')";
-        if ($conn->query($insertQuery) === TRUE) {
-            echo "<script>alert('Blood sample details added successfully.'); window.history.back();</script>";
-        } else {
-            echo "Error: " . $insertQuery . "<br>" . $conn->error;
-        }
+        echo "Invalid blood sample ID.";
     }
 
     // Close the database connection
     $conn->close();
+} else {
+    echo "Invalid request.";
 }
 ?>

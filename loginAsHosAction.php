@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve the submitted username and password
     $username = $_POST['username'];
@@ -28,8 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hospitalID = $row['HospitalID'];
         
         // Set HospitalID in the session
-        session_start();
         $_SESSION['HospitalID'] = $hospitalID;
+        $_SESSION['role'] = 'hospital';
 
         // Redirect to the hospital's dashboard or any other page
         header("Location: frontend/hospitalDashboard.php");

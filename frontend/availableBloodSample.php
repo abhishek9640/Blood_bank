@@ -45,6 +45,9 @@
 </head>
 
 <body>
+<div>
+    <a href="index.php"><button type="submit" class="btn btn-primary">Back</button></a>
+  </div>
   <div class="container">
     <h1 class="text-center mb-5">Available Blood Samples</h1>
 
@@ -60,7 +63,7 @@
 
     // Check the connection
     if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
+        die("Connection failed: " . $conn->connect_error);
     }
 
     // SQL query to fetch blood sample information
@@ -68,29 +71,30 @@
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-      // Output data of each row
-      while ($row = $result->fetch_assoc()) {
-        echo '<div class="card">';
-        echo '<div class="card-body">';
-        echo '<h5 class="card-title">Blood Group: ' . $row["BloodGroup"] . '</h5>';
-        echo '<p class="card-text">Hospital ID: ' . $row["HospitalID"] . '</p>';
-        echo '<p class="card-text">Quantity: ' . $row["Quantity"] . '</p>';
-        echo '<button class="btn btn-request">Request Sample <i class="fas fa-arrow-circle-right"></i></button>';
-        echo '</div>';
-        echo '</div>';
-      }
+        // Output data of each row
+        while ($row = $result->fetch_assoc()) {
+            echo '<div class="card">';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">Blood Group: ' . $row["BloodGroup"] . '</h5>';
+            echo '<p class="card-text">Hospital ID: ' . $row["HospitalID"] . '</p>';
+            echo '<p class="card-text">Quantity: ' . $row["Quantity"] . '</p>';
+            echo '<form action="../requestSampleAction.php" method="POST">';
+            echo '<input type="hidden" name="sampleID" value="<?php echo $row["SampleID"]; ?>">';
+            echo '<button type="submit" class="btn btn-request">Request Sample</button>';
+            echo '</form>';
+            echo '</div>';
+            echo '</div>';
+        }
     } else {
-      echo "No available blood samples.";
+        echo "No available blood samples.";
     }
 
     // Close the database connection
     $conn->close();
-    ?>
+?>
+
 
   </div>
-
-  <!-- Add Font Awesome for icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

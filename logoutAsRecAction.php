@@ -9,6 +9,6 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect to the login page or any other page you want
-header("location: frontend/loginAsReciever.php");
+header("location: frontend/index.php");
 exit();
 ?>

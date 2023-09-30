@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve the submitted username and password
     $username = $_POST['username'];  
@@ -23,7 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $ReceiverID = $row['ReceiverID'];
         // Successful login
+        $_SESSION['ReceiverID'] = $ReceiverID;
+        $_SESSION['role'] = 'receiver';
         echo "Login successful. Redirecting to dashboard...";
         // You can redirect to the reciever's dashboard or any other page
         header("Location: frontend/recieverHome.php");
